@@ -1,0 +1,11 @@
+{
+  "lambda": {
+    "role": "capstone-stash-executor",
+    "name": "capstone-stash",
+    "region": "us-east-1"
+  },
+  "api": {
+    "id": "1z874tqtj2",
+    "module": "bot"
+  }
+}
