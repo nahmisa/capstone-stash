@@ -1,6 +1,6 @@
 {
   "name": "capstone-stash",
-  "private": "true",
+  "private": "false",
   "version": "1.0.0",
   "description": "Ada C6 Capstone Bot Project",
   "scripts": {
@@ -23,5 +23,6 @@
   "devDependencies": {
     "claudia": "^1.9.0",
     "ntl": "^1.1.3"
+
   }
 }
