@@ -3,5 +3,4 @@
 node_modules/
 
 # Ignore my secrets
-.env
 .aws
