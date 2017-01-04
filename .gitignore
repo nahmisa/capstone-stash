@@ -2,5 +2,8 @@
 
 node_modules/
 
+# Ignore test seed file
+moviedata.json
+
 # Ignore my secrets
 .aws

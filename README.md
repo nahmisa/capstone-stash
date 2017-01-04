@@ -1,6 +1,7 @@
-/*could be used for getting stuff from API*/
+<!-- /*could be used for getting stuff from API*/
 /*"node-fetch": "^1.6.3"*/
 /*https://github.com/philnash/quote-bot/blob/master/bot.js*/
+<!-- can use an atomic counter in DynamoDb but I don't think I will have to --> 
 
 # Stash
   For busy breastfeeding moms who need to ensure reliable milk production and don't have mind space to keep track of production, consumption, inventory and expiration dates constanly. My product is a breastmilk inventory management chat bot. Unlike existing breastfeeding tracking apps, which only track feeding itself and put all the tracking pressure on one user (the mom), my product tracks inventory with expiration dates and lets many users participate (e.g., daycare can update consumption away, caregivers can ask for the most efficient combination of frozen bottles etc).
