@@ -1,18 +1,11 @@
-var AWS = require("aws-sdk");
-
-AWS.config.update({
-  region: "us-west-2",
-  endpoint: "https://dynamodb.us-west-2.amazonaws.com"
-  // endpoint: "http://localhost:8000"
-});
-
-var docClient = new AWS.DynamoDB.DocumentClient();
+var database = require('./database');
 
 var request = require('request-promise');
 
 var botBuilder = require('claudia-bot-builder');
 
 var stashBot = botBuilder(function(user_input) {
+  var docClient = database.init();
 
   var current_type = 'test';
 
