@@ -1,3 +1,5 @@
+var tableName = 'Milk';
+
 var init = function() {
   var AWS = require("aws-sdk");
 
@@ -10,6 +12,32 @@ var init = function() {
   return new AWS.DynamoDB.DocumentClient();
 };
 
+var createPutParams = function(type, intent, entities, date) {
+  return {
+    TableName: tableName,
+    Item:{
+      "date": date,
+      "type": type,
+      "info":{
+        "intent": intent,
+        "entity": JSON.stringify(entities)
+      }
+    }
+  };
+};
+
+var createGetParams = function(type, date) {
+  return {
+    TableName: tableName,
+    Key:{
+      "date": date,
+      "type": type
+    }
+  };
+};
+
 module.exports = {
-  init: init
+  init: init,
+  createPutParams: createPutParams,
+  createGetParams: createGetParams
 };
