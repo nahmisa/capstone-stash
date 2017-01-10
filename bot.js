@@ -11,7 +11,7 @@ var stashBot = botBuilder(function(user_input) {
 
 
   var now = Date.now();
-  var current_type = 'test';
+  var current_type = 'frozen';
 
   return fetch(luisURL + user_input.text)
     .then(function(result){
@@ -27,16 +27,14 @@ var stashBot = botBuilder(function(user_input) {
 
     })
     .then(function(data) {
-
-      return methods['Display'](current_type, now);
-
-    })
-    .then(function(data) {
       console.log(data);
-      return 'Great, I got it!' + JSON.stringify(data);
+      return 'Great, I got it!' + JSON.stringify(data.values);
     })
     .catch(function(err) {
-      return 'Sorry something went wrong :(. ' + err;
+      // need to figure out how print a different message for syntax errors.  It confuses the simple bot!
+      console.log(err);
+      var errorMessage = ( err.name != SyntaxError ?  err : 'I am a simple bot that does not understand punctuation.' );
+      return 'Sorry something went wrong :(. ' + errorMessage;
     });
 
 });

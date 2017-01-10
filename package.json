@@ -19,6 +19,9 @@
   "dependencies": {
     "aws-sdk": "^2.7.20",
     "claudia-bot-builder": "^1.0.0",
+    "datejs": "^1.0.0-rc3",
+    "dotenv": "^4.0.0",
+    "mysql": "^2.12.0",
     "node-fetch": "^1.6.3"
   },
   "devDependencies": {
