@@ -1,13 +1,26 @@
 var init = function() {
   require('dotenv').config();
-  var mySQL = require('mysql');
 
-  return mySQL.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME
+  var knex = require('knex')({
+    client: 'mysql',
+    connection: {
+      host: process.env.DB_HOST,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASS,
+      database: process.env.DB_NAME
+    }
   });
+
+  return knex;
+
+  // var mySQL = require('mysql');
+  //
+  // return mySQL.createConnection({
+  //   host: process.env.DB_HOST,
+  //   user: process.env.DB_USER,
+  //   password: process.env.DB_PASS,
+  //   database: process.env.DB_NAME
+  // });
 
 };
 

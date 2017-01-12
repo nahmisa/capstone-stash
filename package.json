@@ -21,7 +21,9 @@
     "claudia-bot-builder": "^1.0.0",
     "datejs": "^1.0.0-rc3",
     "dotenv": "^4.0.0",
+    "knex": "^0.12.6",
     "mysql": "^2.12.0",
+    "mysql-promise": "^4.1.0",
     "node-fetch": "^1.6.3"
   },
   "devDependencies": {
