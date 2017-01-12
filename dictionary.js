@@ -4,18 +4,26 @@ var connection = database.init();
 var init = function() {
 
   // Add
-  var putPromise = function(type, data, now) {
-    connection.connect();
+  var putPromise = function(amount) {
+    var intent = 'Add';
+    var queryStart = Date.now();
+    console.log('querying database');
 
-    var result = connection.query('INSERT INTO milk SET ?', {location: 'home', amount: 2, exp_date: Date.now(), type: type}, function(err, result) {
+    var result = connection.query('INSERT INTO `milk` SET ?', database.createPutParams(amount, intent), function(err, result) {
+      console.log('in callback', err, result);
+
+      //connection.end();
+      //console.log('connection ended');
+
       if (err) throw err;
 
+      console.log("amount=", amount, "id=", result.insertId);
 
-      console.log(result.insertId);
+      console.log('query took ' + (Date.now() - queryStart ));
     });
 
 
-    connection.end();
+
 
     return result;
   };

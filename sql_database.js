@@ -1,5 +1,3 @@
-var tableName = 'Milk';
-
 var init = function() {
   require('dotenv').config();
   var mySQL = require('mysql');
@@ -13,34 +11,52 @@ var init = function() {
 
 };
 
+var interpretType = function(intent) {
+  switch (intent) {
+  case 'Thaw':
+    return 'thawed';
+  case 'Use':
+    return 'consumed';
+  case 'Use':
+    return 'consumed';
+  case 'Add':
+    return 'fresh';
+  case 'Give':
+    return 'away';
+  case 'Freeze':
+    return 'frozen';
+  default:
+    return 'milk';
+  }
+};
+
 var computeExpDate = function(type, date) {
   require('datejs');
 // https://www.cdc.gov/breastfeeding/recommendations/handling_breastmilk.htm
 // assuming for now that fresh means in the refridgerator: 5 days
 // frozen means freezer compartment with separate doors: 3-6 months
+// thawed milk needs to be used in 24 hours - expiration date is today;
 
   switch (type) {
   case 'fresh':
-    return date.addDays(5);
+    return Date.today().add({ days: 5 });
   case 'frozen':
-    return date.addMonths(6);
+    return Date.today().add({months: 6});
+  case 'thawed':
+    return Date.today();
   default:
-    return date;
+    return Date.today();
   }
 };
 
 
-var createPutParams = function(amount, type, location, date) {
+var createPutParams = function(amount, intent) {
+  var type   = interpretType(intent);
 
-// defaults are that the woman is pumping fresh milk for home location now.
-
-  return { table: tableName,
-           params: {
-            amount: amount,
-            type: 'fresh',
+  return {  amount: amount,
+            type: type,
             location: 'home',
             exp_date: computeExpDate(type, Date.now())
-            }
           };
 };
 
@@ -87,8 +103,8 @@ var createPutParams = function(amount, type, location, date) {
 // };
 
 module.exports = {
-  init: init
-  // createPutParams: createPutParams
+  init: init,
+  createPutParams: createPutParams
   // createGetParams: createGetParams,
   // createUpdateParams: createUpdateParams
 };
