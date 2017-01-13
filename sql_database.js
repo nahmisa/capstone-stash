@@ -29,7 +29,7 @@ var interpretType = function(intent) {
   case 'Freeze':
     return 'frozen';
   default:
-    return 'milk';
+    return null;
   }
 };
 
