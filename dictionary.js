@@ -1,31 +1,28 @@
 var database = require('./sql_database');
-var connection = database.init();
+var db = database.init();
 
 var init = function() {
 
   // Add
-  var putPromise = function(amount) {
+  var addMilk = function(entities) {
+
     var intent = 'Add';
-    var queryStart = Date.now();
-    console.log('querying database');
+    var amount = getEntityByType(entities, 'Quantity');
 
-    var result = connection.query('INSERT INTO `milk` SET ?', database.createPutParams(amount, intent), function(err, result) {
-      console.log('in callback', err, result);
+      var queryStart = Date.now();
+      console.log('querying database');
 
-      //connection.end();
-      //console.log('connection ended');
+    return db('milk')
+      .insert(database.createPutParams(amount, intent));
 
-      if (err) throw err;
+  };
 
-      console.log("amount=", amount, "id=", result.insertId);
+  // Display
+  var showMilk = function() {
 
-      console.log('query took ' + (Date.now() - queryStart ));
-    });
+    return db
+      .select().from('milk');
 
-
-
-
-    return result;
   };
 
   // None
@@ -33,10 +30,34 @@ var init = function() {
     throw "I didn't understand what you said";
   };
 
+  var getEntityByType = function(entities, type){
+    // this handles the fact the LUIS.ai does not guarantee the order of entity within the entities array.  These come through based on the order they appear in the utterance, so we need to check against each's type until the correct type is found.
+    // idk why just returning from the if statement didn't work here - gave me undefined.  Weird.
+    var result = null;
+
+    entities.forEach(function(entity){
+
+      if (entity.type == type) {
+        console.log(entity);
+        console.log(entity.entity);
+        result = entity.entity;
+      }
+
+    });
+
+    return result;
+
+  };
+
+  var sumMilkByType = function(){
+
+  };
+
   var dict = {
   };
   // setup Function as Value
-  dict['Add'] = putPromise;
+  dict['Add'] = addMilk;
+  dict['Display'] = showMilk;
   dict['None'] = unknownAction;
 
   return dict;
