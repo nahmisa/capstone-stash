@@ -12,16 +12,6 @@ var init = function() {
   });
 
   return knex;
-
-  // var mySQL = require('mysql');
-  //
-  // return mySQL.createConnection({
-  //   host: process.env.DB_HOST,
-  //   user: process.env.DB_USER,
-  //   password: process.env.DB_PASS,
-  //   database: process.env.DB_NAME
-  // });
-
 };
 
 var interpretType = function(intent) {
@@ -43,7 +33,7 @@ var interpretType = function(intent) {
   }
 };
 
-var computeExpDate = function(type, date) {
+var computeExpDate = function(type) {
   require('datejs');
 // https://www.cdc.gov/breastfeeding/recommendations/handling_breastmilk.htm
 // assuming for now that fresh means in the refridgerator: 5 days
@@ -62,58 +52,16 @@ var computeExpDate = function(type, date) {
   }
 };
 
-
 var createPutParams = function(amount, intent) {
   var type   = interpretType(intent);
 
   return {  amount: amount,
             type: type,
             location: 'home',
-            exp_date: computeExpDate(type, Date.now())
+            exp_date: computeExpDate(type),
+            date: Date.now()
           };
 };
-
-
-//
-// var createGetParams = function(type, date) {
-//   return {
-//     TableName: tableName,
-//     Key:{
-//       "date": date,
-//       "type": type
-//     }
-//   };
-// };
-//
-// var createUpdateParams = function(type, date, entities) {
-//   return {
-//     TableName:tableName,
-//     Key:{
-//       "date": date,
-//       "type": type
-//     },
-//     UpdateExpression: "set info.entity = :e",
-//     ExpressionAttributeValues:{
-//         ":e": JSON.stringify(entities)
-//     },
-//     ReturnValues:"UPDATED_NEW"
-//   };
-// };
-//
-//
-// // question about this in the docs...
-// var createQueryParams = function(type) {
-//   return {
-//     TableName : tableName,
-//     KeyConditionExpression: "#type = :type",
-//     ExpressionAttributeNames:{
-//         "#type": "type"
-//     },
-//     ExpressionAttributeValues: {
-//         ":type": 'test'
-//     }
-//   };
-// };
 
 module.exports = {
   init: init,
