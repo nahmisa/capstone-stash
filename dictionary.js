@@ -18,11 +18,35 @@ var init = function() {
   };
 
   // Display
-  var showMilk = function() {
+  var showMilk = function(entities) {
 
-    return db
-      .select().from('milk');
+    var constr = buildRequestConstraints(entities);
 
+    console.log(constr);
+
+    return sumMilkByConstraints(constr);
+
+    // return ">>> Amount " + JSON.stringify(constr) + " " + sum;
+
+  };
+
+  var buildRequestConstraints = function(entities) {
+
+    var initConstr = {};
+
+    var dbType = getEntityByType(entities, 'Type');
+    var dbLocation = getEntityByType(entities, 'Destination');
+
+    //DB type
+    if (dbType !== null) {
+      initConstr.type = dbType;
+    }
+    //DB location
+    if (dbLocation !== null) {
+      initConstr.location = dbLocation;
+    }
+
+    return initConstr;
   };
 
   // None
@@ -49,7 +73,18 @@ var init = function() {
 
   };
 
-  var sumMilkByType = function(){
+  var sumMilkByConstraints = function(constraints){
+    // constrains is an object of the not-null entities that the user has requested as constranints on the display.
+    console.log('Get milk by constraints');
+    console.log(constraints);
+     return db
+      .select('amount')
+      .from('milk')
+      // type
+      .where(constraints)
+      .reduce(function(a, b) {
+      return a + b.amount;
+      }, 0);
 
   };
 
