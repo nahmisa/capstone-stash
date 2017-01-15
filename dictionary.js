@@ -15,6 +15,8 @@ var init = function() {
     return db('milk')
       .insert(database.createPutParams(amount, intent));
 
+    // return an affirmative message and how much milk they have
+    // return showMilk([]);
   };
 
   // Display
@@ -23,6 +25,8 @@ var init = function() {
     var constr = buildRequestConstraints(entities);
 
     console.log(constr);
+
+    console.log(sumMilkByConstraints(constr));
 
     return sumMilkByConstraints(constr);
 
@@ -56,7 +60,7 @@ var init = function() {
 
   var getEntityByType = function(entities, type){
     // this handles the fact the LUIS.ai does not guarantee the order of entity within the entities array.  These come through based on the order they appear in the utterance, so we need to check against each's type until the correct type is found.
-    // idk why just returning from the if statement didn't work here - gave me undefined.  Weird.
+
     var result = null;
 
     entities.forEach(function(entity){
