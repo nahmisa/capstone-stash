@@ -20,8 +20,6 @@ var interpretType = function(intent) {
     return 'thawed';
   case 'Use':
     return 'consumed';
-  case 'Use':
-    return 'consumed';
   case 'Add':
     return 'fresh';
   case 'Give':
@@ -63,9 +61,18 @@ var createPutParams = function(amount, intent) {
           };
 };
 
+var createUpdateParams = function(intent) {
+  var type   = interpretType(intent);
+
+  return {  type: type,
+            location: 'home',
+            exp_date: computeExpDate(type),
+            date: Date.now()
+          };
+};
+
 module.exports = {
   init: init,
-  createPutParams: createPutParams
-  // createGetParams: createGetParams,
-  // createUpdateParams: createUpdateParams
+  createPutParams: createPutParams,
+  createUpdateParams: createUpdateParams
 };

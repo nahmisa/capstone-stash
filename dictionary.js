@@ -15,8 +15,6 @@ var init = function() {
     return db('milk')
       .insert(database.createPutParams(amount, intent));
 
-    // return an affirmative message and how much milk they have
-    // return showMilk([]);
   };
 
   // Display
@@ -30,7 +28,31 @@ var init = function() {
 
     return sumMilkByConstraints(constr);
 
-    // return ">>> Amount " + JSON.stringify(constr) + " " + sum;
+  };
+
+  // freeze, thaw
+  // freezeMilk & thawMilk take entities as parameter because other methods in the dictionary do and this make it more resuable.
+
+  var freezeMilk = function(entities) {
+    return updateMilk('Freeze', entities, 'fresh');
+  };
+
+  var thawMilk = function(entities) {
+    return updateMilk('Thaw', entities, 'frozen');
+  };
+
+  var updateMilk = function(intent, entities, type) {
+
+      var amount = getEntityByType(entities, 'Quantity');
+      console.log('updating database');
+
+    // .select('*').from
+    return db('milk')
+      .where('type', type)
+      .andWhere('amount', amount)
+      .orderBy('exp_date', 'asc')
+      .limit(1)
+      .update(database.createUpdateParams(intent));
 
   };
 
@@ -84,8 +106,8 @@ var init = function() {
      return db
       .select('amount')
       .from('milk')
-      // type
       .where(constraints)
+      .whereNot({type: 'consumed'})
       .reduce(function(a, b) {
       return a + b.amount;
       }, 0);
@@ -97,6 +119,8 @@ var init = function() {
   // setup Function as Value
   dict['Add'] = addMilk;
   dict['Display'] = showMilk;
+  dict['Freeze'] = freezeMilk;
+  dict['Thaw'] = thawMilk;
   dict['None'] = unknownAction;
 
   return dict;
