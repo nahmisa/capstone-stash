@@ -34,21 +34,26 @@ var init = function() {
   // freezeMilk & thawMilk take entities as parameter because other methods in the dictionary do and this make it more resuable.
 
   var freezeMilk = function(entities) {
-    return updateMilk('Freeze', entities, 'fresh');
+    return updateMilk('Freeze', entities, { 'type': 'fresh' });
   };
 
   var thawMilk = function(entities) {
-    return updateMilk('Thaw', entities, 'frozen');
+    return updateMilk('Thaw', entities, { 'type': 'frozen' });
   };
 
-  var updateMilk = function(intent, entities, type) {
+  var feedMilk = function(entities) {
+    // when we feed milk, we feed from first to expire regardless of type.  Will normally be thawed then fresh then froze because of expirationd dates.
+    return updateMilk('Use', entities, {});
+  };
+
+  var updateMilk = function(intent, entities, whereType) {
 
       var amount = getEntityByType(entities, 'Quantity');
       console.log('updating database');
 
     // .select('*').from
     return db('milk')
-      .where('type', type)
+      .where(whereType)
       .andWhere('amount', amount)
       .orderBy('exp_date', 'asc')
       .limit(1)
@@ -119,6 +124,7 @@ var init = function() {
   // setup Function as Value
   dict['Add'] = addMilk;
   dict['Display'] = showMilk;
+  dict['Use'] = feedMilk;
   dict['Freeze'] = freezeMilk;
   dict['Thaw'] = thawMilk;
   dict['None'] = unknownAction;
