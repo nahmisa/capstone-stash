@@ -28,6 +28,7 @@ var stashBot = botBuilder(function(user_input, originalApiRequest) {
       action = data.topScoringIntent.intent;
 
       if (action == "None") throw "I didn't undersand what you said";
+
       console.log(action);
 
       return methods[action](data.entities);
@@ -35,7 +36,7 @@ var stashBot = botBuilder(function(user_input, originalApiRequest) {
     .then(function(result) {
 
       console.log(result, "<<<< The result");
-      return response.calculateAmount(action);
+      return response.calculateAmount(action, result);
 
     })
     .then(function(result) {
@@ -44,7 +45,7 @@ var stashBot = botBuilder(function(user_input, originalApiRequest) {
     })
     .catch(function(err) {
       console.log(err);
-      return 'Sorry something went wrong :(. ' + errorMessage;
+      return 'Sorry something went wrong :(. ' + err;
     });
 
 

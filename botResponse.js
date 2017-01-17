@@ -1,7 +1,7 @@
 var dictionary = require('./dictionary');
 var methods = dictionary.init();
 
-var calculateAmount = function(action) {
+var calculateAmount = function(action, result) {
   // based on the aciton, we will provide different output
   switch (action) {
   case 'Display':
@@ -25,7 +25,7 @@ var createOutput = function(action, query, result) {
   // based on the aciton, we will provide different output
   switch (action) {
   case 'Display':
-    console.log( 'You said: ' + query + " " + "There are " + result + " oz of milk total.");
+    console.log( 'You said: ' + query + " " + "There are " + result + " oz total.");
     return 'You said: ' + query + ". " +
       "There are " + result + " oz of milk total.";
   case 'Add':
