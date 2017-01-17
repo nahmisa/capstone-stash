@@ -42,7 +42,7 @@ var init = function() {
   };
 
   var feedMilk = function(entities) {
-    // when we feed milk, we feed from first to expire regardless of type.  Will normally be thawed then fresh then froze because of expirationd dates.
+    // when we feed milk, we feed from first to expire regardless of type.  Will normally be thawed then fresh then frozen because of expirationd dates.
     return updateMilk('Use', entities, {});
   };
 
