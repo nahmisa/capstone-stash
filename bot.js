@@ -41,6 +41,9 @@ var stashBot = botBuilder(function(user_input, originalApiRequest) {
     })
     .then(function(result) {
       console.log('log 1 >>>');
+      // notify the user if that combination of ounces/type is not available
+      if (result === 0) throw "You said: " + user_input.text + ", but there isn't enough milk to do that.";
+
       return response.createOutput(action, user_input.text, result);
     })
     .catch(function(err) {
