@@ -42,12 +42,13 @@ var computeExpDate = function(type) {
   case 'fresh':
     return Date.today().add({ days: 5 });
   case 'frozen':
-    return Date.today().add({months: 6});
-  case 'consumed':
-    // just so this date doesn't come up when checking which milk to feed. Baby will be weaned in 100 years.
-    return Date.today().add({years: 100});
+    return Date.today().add({ months: 6 });
   case 'thawed':
     return Date.today();
+  case 'consumed':
+    // To ensure this date doesn't come up when querying to feed baby
+    // Set at a date when we are sure baby will be weaned.
+    return Date.today().add({ years: 100 });
   default:
     return Date.today();
   }
