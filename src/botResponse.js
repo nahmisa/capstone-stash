@@ -1,79 +1,103 @@
 var dictionary = require('./dictionary');
 var methods = dictionary.init();
 
-var calculateAmount = async function(action, result) {
+var calculateAmount = async function() {
 
   var milkTotals = {};
 
   milkTotals.total = await methods['Display']([]);
 
+  milkTotals.fresh = await methods['Display']([{
+      "entity": "fresh",
+      "type": "Type"
+      }]);
+
   milkTotals.frozen = await methods['Display']([{
       "entity": "frozen",
       "type": "Type"
       }]);
+
   milkTotals.thawed = await methods['Display']([{
       "entity": "thawed",
       "type": "Type"
       }]);
+
   milkTotals.consumed = await methods['Display']([{
       "entity": "consumed",
       "type": "Type"
       }]);
 
   return milkTotals;
-  // based on the aciton, we will provide different output
-  // switch (action) {
-  // case 'Display':
-  //   return result;
-  // case 'Add':
-  // // report all the milk ever when a mom adds milk
-  //   return methods['Display']([]);
-  // case 'Thaw':
-  // case 'Freeze':
-  //   // report the milk thawed/frozen and say how much milk is left frozen (should only have a little thawed at a time).
-  //   return methods['Display']([{
-  //     "entity": "frozen",
-  //     "type": "Type"
-  //     }]);
-  // default:
-  //   return methods['Display']([]);
-  // }
+
 };
 
 // can use milk totals to give an overview of the state of the db.
-var createOutput = function(action, query, result) {
+var createOutput = function(action, query, totals) {
   // based on the aciton, we will provide different output
-  console.log("This should be a dictionary of totals", result);
+  console.log("This should be a dictionary of totals", totals);
   switch (action) {
   case 'Display':
-    console.log( 'You said: ' + query + " " + "There are " + result.total + " oz total.");
+    console.log('You said: ' + query + ". " +
+      "There are " + totals.total + " ounces of milk total, consisting of: ." +
+      totals.fresh + " fresh ounces, " +
+      totals.frozen + " frozen ounces, and " +
+      totals.thawed + " thawed ounces, ");
+
     return 'You said: ' + query + ". " +
-      "There are " + result.total + " oz of milk total.";
+      "There are " + totals.total + " ounces of milk total, consisting of: ." +
+      totals.fresh + " fresh ounces, " +
+      totals.frozen + " frozen ounces, and " +
+      totals.thawed + " thawed ounces.";
 
   case 'Add':
   // report all the milk that has not been consumed when a mom adds milk
-    console.log('You said: ' + query + " " + "After adding that milk, there are " + result.total + " oz of milk total.");
-    return 'You said: ' + query + " " +
-    "After adding that milk, there are " + result.total + " oz of milk total.";
+    console.log('You said: ' + query + ". " +
+      "After adding that milk, there are " + totals.total + " ounces of consumable milk total." +
+      "Since you've been tracking, you've added " + (totals.consumed + totals.total) + " ounces - way to go!");
+
+    return 'You said: ' + query + ". " +
+      "After adding that milk, there are " + totals.total + " ounces of consumable milk total." +
+      "Since you've been tracking, you've added " + (totals.consumed + totals.total) + " ounces - way to go!";
+
 
   case 'Use':
     // report all that has not been consumed.
     console.log('You said: ' + query + " " +
-      "After using that milk, there are " + result.consumed + " oz of milk total.");
+      "After using that milk, there are " + totals.total + " ounces of consumable milk left, consisting of: " +
+      totals.fresh + " fresh ounces, " +
+      totals.frozen + " frozen ounces, and " +
+      totals.thawed + " thawed ounces. " +
+      "Since you've been tracking, Baby has consumed " + totals.consumed + " ounces - woah!");
+
     return 'You said: ' + query + " " +
-      "After using that milk, there are " + result.consumed + " oz of milk total.";
+      "After using that milk, there are " + totals.total + " ounces of consumable milk left, consisting of: " +
+      totals.fresh + " fresh ounces, " +
+      totals.frozen + " frozen ounces, and " +
+      totals.thawed + " thawed ounces. " +
+      "Since you've been tracking, Baby has consumed " + totals.consumed + " ounces - woah!";
 
   case 'Thaw':
-  case 'Freeze':
-    // report the milk thawed/frozen and say how much milk is left frozen (should only have a little thawed at a time).
 
     console.log('You said: ' + query + " " +
-      "Now there are " + result.frozen + " oz of frozen milk.");
+      "After thawing that milk there are " + totals.thawed + " ounces of thawed milk.  Remeber, this milk expires in 24 hours so use it up! There are still " +
+      totals.frozen + " frozen ounces.");
+
     return 'You said: ' + query + " " +
-      "Now there are " + result.frozen + " oz of frozen milk.";
+      "After thawing that milk there are " + totals.thawed + " ounces of thawed milk.  Remeber, this milk expires in 24 hours so use it up! There are still " +
+      totals.frozen + " frozen ounces.";
+
+  case 'Freeze':
+
+    console.log('You said: ' + query + " " +
+      "After freezing that milk there are " + totals.frozen + " ounces of thawed milk. There are still " +
+      totals.fresh + " fresh ounces.");
+
+    return 'You said: ' + query + " " +
+      "After freezing that milk there are " + totals.frozen + " ounces of thawed milk. There are still " +
+      totals.fresh + " fresh ounces.";
 
   default:
-    return 'Great I got it! ' + result;
+    return 'Great I got it! ' + totals.total;
   }
 
 };
