@@ -5,7 +5,8 @@ var calculateAmount = async function(action, result) {
 
   var milkTotals = {};
 
-  milkTotals.total = result;
+  milkTotals.total = await methods['Display']([]);
+
   milkTotals.frozen = await methods['Display']([{
       "entity": "frozen",
       "type": "Type"
@@ -39,7 +40,7 @@ var calculateAmount = async function(action, result) {
   // }
 };
 
-// can use milk totals to give an overview of the state of the db
+// can use milk totals to give an overview of the state of the db.
 var createOutput = function(action, query, result) {
   // based on the aciton, we will provide different output
   console.log("This should be a dictionary of totals", result);
