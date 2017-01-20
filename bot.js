@@ -29,7 +29,7 @@ var stashBot = botBuilder(function(user_input, originalApiRequest) {
     // Get the intent from the API data and use to determine the action/method
       action = data.topScoringIntent.intent;
       // Error-handle the case that the user's intent is not understood
-      if (action == "None") throw "I didn't undersand what you said";
+      if (action == "None") throw " I didn't undersand what you said";
 
       return methods[action](data.entities);
     })
