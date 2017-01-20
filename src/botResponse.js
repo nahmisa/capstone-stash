@@ -34,7 +34,7 @@ var createOutput = function(action, query, totals) {
   switch (action) {
   case 'Display':
     return "You said: " + "'" + query + "'. " +
-      "There are " + totals.total + " ounces of milk total, consisting of: ." +
+      " There are " + totals.total + " ounces of milk total, consisting of: " +
       totals.fresh + " fresh ounces, " +
       totals.frozen + " frozen ounces, and " +
       totals.thawed + " thawed ounces.";
@@ -61,7 +61,7 @@ var createOutput = function(action, query, totals) {
   case 'Freeze':
     // Report frozen and still fresh
     return "You said: " + "'" + query + "'. " +
-      " After freezing that milk there are " + totals.frozen + " ounces of thawed milk.  There are still " +
+      " After freezing that milk there are " + totals.frozen + " ounces of frozen milk.  There are still " +
       totals.fresh + " fresh ounces.";
   default:
     return ' Great I got it! ' + totals.total;
