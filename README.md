@@ -1,10 +1,5 @@
-<!-- /*could be used for getting stuff from API*/
-/*"node-fetch": "^1.6.3"*/
-/*https://github.com/philnash/quote-bot/blob/master/bot.js*/
-<!-- can use an atomic counter in DynamoDb but I don't think I will have to --> 
-
 # Stash
-  For busy breastfeeding moms who need to ensure reliable milk production and don't have mind space to keep track of production, consumption, inventory and expiration dates constanly. My product is a breastmilk inventory management chat bot. Unlike existing breastfeeding tracking apps, which only track feeding itself and put all the tracking pressure on one user (the mom), my product tracks inventory with expiration dates and lets many users participate (e.g., daycare can update consumption away, caregivers can ask for the most efficient combination of frozen bottles etc).
+  For busy breastfeeding moms who need to ensure reliable milk production and don't have mind space to keep track of production, consumption, inventory and expiration dates constantly. My product is a breastmilk inventory management chat bot. Unlike existing breastfeeding tracking apps, which only track feeding itself and put all the tracking pressure on one user (the mom), my product tracks inventory with expiration dates and lets many users participate (e.g., daycare can update consumption away, caregivers can ask for the most efficient combination of frozen bottles etc).
 
 
 ## Features
@@ -15,7 +10,7 @@
 ### More Features
 * User can edit inventory
 * User can add supply per category
-* User can edit inventeory per category
+* User can edit inventory per category
 * User can edit supply dates (backdate)
 * User can ask for inventory longevity
 * Bot will send alerts when inventory runs low and remind mom to pump
@@ -30,9 +25,9 @@
 
 ## Tech Stack
 1. Production business logic: JavaScript hosted on [AWS Lambda](https://aws.amazon.com/lambda/)
-1. Production storage: [AWS DynamoDB](https://aws.amazon.com/dynamodb/)
+1. Production storage: [AWS RDS](https://aws.amazon.com/rds/)
 1. Dev business logic: JavaScript hosted on [NodeJS](https://nodejs.org/en/)
-1. Dev storage: [Local installation of DynamoDB](https://aws.amazon.com/blogs/aws/dynamodb-local-for-desktop-development/)
+1. Dev storage: [Local installation of MySQL](https://dev.mysql.com/)
 1. Language processing: [LUIS.ai](https://www.luis.ai/)
 1. UI, authentication: [Slack](https://slack.com/)
 1. Scaffolding: [Claudia](https://github.com/claudiajs/claudia-bot-builder)
