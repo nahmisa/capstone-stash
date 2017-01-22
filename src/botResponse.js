@@ -1,5 +1,5 @@
 var dictionary = require('./dictionary');
-var methods = dictionary.init();
+var methods = dictionary.init(); // I think I already saw `dictionary.init()` in another file. Is this on purpose?
 
 var calculateAmount = async function() {
   var milkTotals = {};
@@ -7,6 +7,7 @@ var calculateAmount = async function() {
   milkTotals.total = await methods['Display']([]);
   // Fresh
   milkTotals.fresh = await methods['Display']([{
+    // I understand this is a filtering object ("select milk where `Type` is `fresh`"). To use common naming patterns you can rename `entity` to `value`.
       "entity": "fresh",
       "type": "Type"
       }]);
@@ -26,6 +27,10 @@ var calculateAmount = async function() {
       "type": "Type"
       }]);
 
+  // perf: you are `await`ing on every method to calculate. Why don't you send them all out and `await` on all of them finish, in any order?
+  // codewise, I mean `await Promise.all([method1, method2, method3])` where a method is exacly what you have right now,
+  // `milkTotal.fresh`, `milkTotals.frozen`, ... minus the `await`.
+  
   return milkTotals;
 };
 
@@ -33,6 +38,8 @@ var createOutput = function(action, query, totals) {
   // Based on the action, provide different output
   switch (action) {
   case 'Display':
+      // As a user, why do I need to know what I said? Assuming this is for debugging purposes, maybe you can only 
+      // reply with the user query if a secret word exists, e.g. "debug"?
     return "You said: " + "'" + query + "'. " +
       " There are " + totals.total + " ounces of milk total, consisting of: " +
       totals.fresh + " fresh ounces, " +

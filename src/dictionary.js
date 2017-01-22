@@ -3,10 +3,15 @@ var database = require('./sql_database');
 var db = database.init();
 
 // Initializes a dictionary of methods
+// I saw `.init` run from more than one place. On purpose? Doesn't seems so. 
+// If it is, should there be an "if already run once don't run twice" check?
+// Alternatively, a more testable pattern would be either using a `create()` 
+// method (naming), or better a class with a constructor.
 var init = function() {
 
   // Add intent
   var addMilk = function(entities) {
+    // `const` and `let` instead of `var` everywhere, please.
     var intent = 'Add';
     var amount = getEntityByType(entities, 'Quantity');
 
@@ -39,6 +44,7 @@ var init = function() {
 
   var buildRequestConstraints = function(entities) {
     var initConstr = {};
+    // naming: this is not `dbType`. More like `milkType`.
     var dbType = getEntityByType(entities, 'Type');
     var dbLocation = getEntityByType(entities, 'Destination');
 
@@ -74,7 +80,9 @@ var init = function() {
       .from('milk')
       .where(constraints)
       .whereNot({type: 'consumed'})
-      .reduce(function(a, b) {
+    //  nice use of functional programming in general and `reduce` specifically.
+    // tiny refactoring: you could create a method called `sum(a, b) { return a + b.amount; }` and then just call `reduce(sum)`
+      .reduce(function(a, b) {   
       return a + b.amount;
       }, 0);
   };
@@ -164,6 +172,15 @@ var init = function() {
     throw "I didn't understand what you said";
   };
 
+  // odd syntax. why not:
+  // ```
+  // const dict = {
+  //     add: addMilk,
+  //     display: showMilk
+  //     ...
+  // };
+  // ```
+  // Also note the camel casing, as customery in JavaScript
   var dict = {
   };
   // setup Function as Value

@@ -14,6 +14,8 @@ var init = function() {
   return knex;
 };
 
+// `switch` works perfectly.
+// a dictionary would be more extensible.
 var interpretType = function(intent) {
   switch (intent) {
   case 'Thaw':
@@ -48,6 +50,7 @@ var computeExpDate = function(type) {
   case 'consumed':
     // To ensure this date doesn't come up when querying to feed baby
     // Set at a date when we are sure baby will be weaned.
+      // hacky. why not `null`?
     return Date.today().add({ years: 100 });
   default:
     return Date.today();
