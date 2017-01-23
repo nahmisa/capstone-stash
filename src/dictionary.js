@@ -58,7 +58,7 @@ var init = function() {
     // Constraints is an object of the not-null entities
     // The user has requested as constranints on the display.
 
-    if(constraints.type == 'consumed') {
+    if(constraints.milk_type == 'consumed') {
       // Omit the whereNot cosumed if we want the total of consumed
       return db
         .select('amount')
