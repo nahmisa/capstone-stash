@@ -44,7 +44,7 @@ var init = function() {
 
     //DB type
     if (dbType !== null) {
-      initConstr.type = dbType;
+      initConstr.milk_type = dbType;
     }
     //DB location
     if (dbLocation !== null) {
