@@ -10,7 +10,7 @@ var init = function() {
     var intent = 'Add';
     var amount = getEntityByType(entities, 'Quantity');
 
-    return db('milk')
+    return db('milks')
       .insert(database.createPutParams(amount, intent));
   };
 
@@ -62,7 +62,7 @@ var init = function() {
       // Omit the whereNot cosumed if we want the total of consumed
       return db
         .select('amount')
-        .from('milk')
+        .from('milks')
         .where(constraints)
         .reduce(function(a, b) {
         return a + b.amount;
@@ -71,7 +71,7 @@ var init = function() {
 
     return db
       .select('amount')
-      .from('milk')
+      .from('milks')
       .where(constraints)
       .whereNot({milk_type: 'consumed'})
       .reduce(function(a, b) {
@@ -97,7 +97,7 @@ var init = function() {
   var updateMilk = async function(intent, entities, whereType) {
     var updateIds = await getUpdateIds(entities, whereType);
 
-    return db('milk')
+    return db('milks')
       .whereIn('id', updateIds)
       .update(database.createUpdateParams(intent));
   };
@@ -148,7 +148,7 @@ var init = function() {
 
   var getDbRow = function(amount, amountComparison, whereType, ids) {
 
-    return db('milk')
+    return db('milks')
       .where(whereType)
       .where('amount', amountComparison, amount)
       .whereNot({ 'milk_type': 'consumed' })
