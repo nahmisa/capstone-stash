@@ -8,22 +8,22 @@ var calculateAmount = async function() {
   // Fresh
   milkTotals.fresh = await methods['Display']([{
       "entity": "fresh",
-      "milk_type": "Type"
+      "type": "Type"
       }]);
   // Frozen
   milkTotals.frozen = await methods['Display']([{
       "entity": "frozen",
-      "milk_type": "Type"
+      "type": "Type"
       }]);
   // Thawed
   milkTotals.thawed = await methods['Display']([{
       "entity": "thawed",
-      "milk_type": "Type"
+      "type": "Type"
       }]);
   // Consumed
   milkTotals.consumed = await methods['Display']([{
       "entity": "consumed",
-      "milk_type": "Type"
+      "type": "Type"
       }]);
 
   return milkTotals;
