@@ -73,7 +73,7 @@ var init = function() {
       .select('amount')
       .from('milk')
       .where(constraints)
-      .whereNot({type: 'consumed'})
+      .whereNot({milk_type: 'consumed'})
       .reduce(function(a, b) {
       return a + b.amount;
       }, 0);
@@ -81,11 +81,11 @@ var init = function() {
 
   // Methods the leverage Update
   var freezeMilk = function(entities) {
-    return updateMilk('Freeze', entities, { 'type': 'fresh' });
+    return updateMilk('Freeze', entities, { 'milk_type': 'fresh' });
   };
 
   var thawMilk = function(entities) {
-    return updateMilk('Thaw', entities, { 'type': 'frozen' });
+    return updateMilk('Thaw', entities, { 'milk_type': 'frozen' });
   };
 
   var feedMilk = function(entities) {
@@ -151,7 +151,7 @@ var init = function() {
     return db('milk')
       .where(whereType)
       .where('amount', amountComparison, amount)
-      .whereNot({ 'type': 'consumed' })
+      .whereNot({ 'milk_type': 'consumed' })
       // at this point, we don't care about consumed milk
       .whereNotIn('id', ids)
       // Must not be in the ids that have already been added

@@ -58,7 +58,7 @@ var createPutParams = function(amount, intent) {
   var type   = interpretType(intent);
 
   return {  amount: amount,
-            type: type,
+            milk_type: type,
             location: 'home',
             exp_date: computeExpDate(type),
             date: Date.now()
@@ -68,7 +68,7 @@ var createPutParams = function(amount, intent) {
 var createUpdateParams = function(intent) {
   var type   = interpretType(intent);
 
-  return {  type: type,
+  return {  milk_type: type,
             location: 'home',
             exp_date: computeExpDate(type),
             date: Date.now()
