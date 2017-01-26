@@ -1,3 +1,5 @@
+require('datejs');
+
 var init = function() {
   require('dotenv').config();
 
@@ -32,7 +34,6 @@ var interpretType = function(intent) {
 };
 
 var computeExpDate = function(type) {
-  require('datejs');
 // https://www.cdc.gov/breastfeeding/recommendations/handling_breastmilk.htm
 // assuming for now that fresh means in the refridgerator: 5 days
 // frozen means freezer compartment with separate doors: 3-6 months
@@ -61,7 +62,7 @@ var createPutParams = function(amount, intent) {
             milk_type: type,
             location: 'home',
             exp_date: computeExpDate(type),
-            date: Date.now()
+            date: Date.today()
           };
 };
 
@@ -71,7 +72,7 @@ var createUpdateParams = function(intent) {
   return {  milk_type: type,
             location: 'home',
             exp_date: computeExpDate(type),
-            date: Date.now()
+            date: Date.today()
           };
 };
 
